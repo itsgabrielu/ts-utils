@@ -1,0 +1,35 @@
+{
+  "name": "ts-utils",
+  "version": "0.1.0",
+  "description": "Utilities for extra JS/TS algorithms and data structures",
+  "main": "src/graph/directed/index.ts",
+  "scripts": {
+    "build": "rm -rf dist && rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woodysee/ts-utils.git"
+  },
+  "author": "callunaborealis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/woodysee/ts-utils/issues"
+  },
+  "homepage": "https://github.com/woodysee/ts-utils#readme",
+  "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "@rollup/plugin-typescript": "^8.2.3",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
+    "prettier": "2.3.2",
+    "rollup": "^2.53.3"
+  },
+  "dependencies": {
+    "typescript": "^4.3.5"
+  },
+  "directories": {
+    "test": "tests"
+  }
+}
