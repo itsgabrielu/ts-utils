@@ -44,7 +44,7 @@ export class DirectedGraph {
     );
   }
   // DFS means we explore the deeper node of this node first. To do so, we use recursion.
-  dfsSearch(activeNode: GraphNode, visit: (v: GraphNode) => void) {
+  dfsSearch(activeNode: GraphNode | undefined, visit: (v: GraphNode) => void) {
     if (!activeNode) {
       return;
     }

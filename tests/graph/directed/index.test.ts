@@ -37,6 +37,22 @@ describe("Directed Graph", () => {
           });
         },
       );
+      testSet.hasRoutesTest.forEach(
+        ([originGraphNode, destinationGraphNode, expectedHasRoute]) => {
+          it(`should${
+            expectedHasRoute ? "" : " not"
+          } be able to find a route for Node ${originGraphNode} to Node ${destinationGraphNode} via depth-first search`, () => {
+            const graph = new DirectedGraph(testSet.vertices, testSet.edges);
+            let hasRoute = false;
+            graph.dfsSearch(graph.getNode(originGraphNode), (v) => {
+              if (v && v == graph.getNode(destinationGraphNode)) {
+                hasRoute = true;
+              }
+            });
+            expect(hasRoute).to.equal(expectedHasRoute);
+          });
+        },
+      );
     });
   });
 });
