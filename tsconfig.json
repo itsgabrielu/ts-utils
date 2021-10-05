@@ -13,7 +13,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es5",
+    "target": "ESNext",
     "types": ["mocha"]
   },
   "exclude": ["node_modules", "dist"]
