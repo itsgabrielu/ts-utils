@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Initialise repository with directed graph and initial rollup configuration (for uglify)
+- Initialise repository with directed graph and initial rollup configuration
+- Add test environment
 - This changelog file
 
 [Unreleased]: https://github.com/woodysee/ts-utils/compare/v1.0.0...HEAD

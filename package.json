@@ -4,7 +4,8 @@
   "description": "Utilities for extra JS/TS algorithms and data structures",
   "main": "src/graph/directed/index.ts",
   "scripts": {
-    "build": "rm -rf dist && rollup -c"
+    "build": "rm -rf dist && rollup -c",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --check-leaks --parallel -r ts-node/register 'tests/**/*.ts'"
   },
   "repository": {
     "type": "git",
@@ -20,11 +21,16 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@rollup/plugin-typescript": "^8.2.3",
+    "@types/chai": "^4.2.22",
+    "@types/mocha": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^4.28.4",
     "@typescript-eslint/parser": "^4.28.4",
+    "chai": "^4.3.4",
     "eslint": "^7.31.0",
+    "mocha": "^9.1.2",
     "prettier": "2.3.2",
-    "rollup": "^2.53.3"
+    "rollup": "^2.53.3",
+    "ts-node": "^10.2.1"
   },
   "dependencies": {
     "typescript": "^4.3.5"
