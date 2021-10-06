@@ -1,9 +1,9 @@
 import { expect } from "chai";
 
-import { DirectedGraph } from "../../../src/graph/directed";
+import { DirectedGraph } from "../../../../src/data-structures/graph/directed";
 import { basicTestSet, secondTestSet } from "./mock";
 
-import type { GraphNode } from "../../../src/graph/directed/types";
+import type { GraphNode } from "../../../../src/data-structures/graph/directed/types";
 
 describe("Directed Graph", () => {
   [basicTestSet, secondTestSet].map((testSet, i) => {

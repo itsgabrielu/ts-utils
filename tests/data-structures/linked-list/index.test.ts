@@ -1,5 +1,8 @@
 import { expect } from "chai";
-import { DoublyLinkedNode, SinglyLinkedNode } from "../../src/linked-list";
+import {
+  DoublyLinkedNode,
+  SinglyLinkedNode,
+} from "../../../src/data-structures/linked-list";
 
 const testSets = [
   [[27, 45, 76], 76, [27, /* 76, */ 45]],

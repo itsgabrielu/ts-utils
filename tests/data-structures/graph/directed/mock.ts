@@ -1,4 +1,7 @@
-import type { GraphValue, GraphNode } from "../../../src/graph/directed/types";
+import type {
+  GraphValue,
+  GraphNode,
+} from "../../../../src/data-structures/graph/directed/types";
 
 interface TestSet {
   vertices: GraphValue[];
