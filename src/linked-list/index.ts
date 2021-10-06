@@ -2,7 +2,6 @@ export class SinglyLinkedNode<V> {
   private _id: Symbol;
   private _next: SinglyLinkedNode<V> | undefined;
   value: V;
-
   constructor(list: V[]) {
     this._id = Symbol();
     this.value = list[0];
