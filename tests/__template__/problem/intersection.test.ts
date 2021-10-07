@@ -1,7 +1,7 @@
 import { expect } from "chai";
 
 const merge = (a: number[], b: number[]) => {
-  return [...a].push(...b);
+  return [...a, ...b];
 };
 
 /**
