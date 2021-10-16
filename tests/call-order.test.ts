@@ -53,19 +53,10 @@ const getOrderOfLogs = () => {
  * TODO: Figure out logging test guarantee
  */
 describe("Order of logs", () => {
-  [
-    [
-      [2, 2, 4, 1],
-      [1, 2, 0, 2],
-      [2, 2, 4, 1, 1, 2, 0, 2],
-    ],
-  ].forEach(([first, second, expected]) => {
+  [undefined].forEach(() => {
     describe(`For the problem`, () => {
-      it(`should give ${first} merge ${second} -> ${expected}`, () => {
-        const arr: string[] = [];
+      it(`should give the order of logs`, async () => {
         getOrderOfLogs();
-        // expect(arr).to.deep.equal(["2", "4", "3", "1"]);
-        expect(2).lessThanOrEqual(2); // Fake tests
       });
     });
   });
