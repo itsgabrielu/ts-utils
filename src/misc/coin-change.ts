@@ -1,29 +1,46 @@
-const coinChange = (coins: number[], amount: number): number => {
-  const newCoins = [...coins] as number[];
-  newCoins.sort((a, b) => b - a);
-  let amountRemaining = amount;
-  const coinIndex = Object.values(newCoins).reduce((acc, val) => {
-    acc[val] = 0;
-    return acc;
-  }, {} as Record<number, number>);
+const getMinNrOfCoins = (
+  coins: number[],
+  amount: number,
+  coinSelectionLengths: Record<number, number>,
+) => {
+  if (typeof coinSelectionLengths[amount - 1] !== "undefined") {
+    return coinSelectionLengths[amount - 1];
+  }
+  if (amount < 0) {
+    return -1;
+  }
+  if (amount === 0) {
+    return 0;
+  }
 
-  newCoins.forEach((c) => {
-    if (amountRemaining >= c) {
-      coinIndex[c] = Math.floor(amountRemaining / c);
-      amountRemaining = amountRemaining - coinIndex[c] * c;
+  let count = NaN;
+  let currentMinNrOfCoins = 0;
+
+  coins.forEach((coinValue) => {
+    currentMinNrOfCoins = getMinNrOfCoins(
+      coins,
+      amount - coinValue,
+      coinSelectionLengths,
+    );
+    if (currentMinNrOfCoins !== -1) {
+      const nextMinNrOfCoins = currentMinNrOfCoins + 1;
+      count = Number.isNaN(count)
+        ? nextMinNrOfCoins
+        : Math.min(count, nextMinNrOfCoins);
     }
   });
 
-  console.log(coinIndex);
+  coinSelectionLengths[amount - 1] = Number.isNaN(count) ? -1 : count;
 
-  if (amountRemaining > 0) {
-    return -1;
-  }
+  return coinSelectionLengths[amount - 1];
+};
 
-  return Object.values(coinIndex).reduce(
-    (acc: number, val: number) => acc + val,
-    0,
-  );
+// Top down using dynamic programming
+// Time complexity: O()
+const coinChange = (coins: number[], amount: number): number => {
+  const coinSelectionLengths: Record<number, number> = {};
+  const minNumberOfCoins = getMinNrOfCoins(coins, amount, coinSelectionLengths);
+  return minNumberOfCoins;
 };
 
 export default coinChange;

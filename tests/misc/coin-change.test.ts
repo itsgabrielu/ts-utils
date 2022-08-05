@@ -14,7 +14,7 @@ describe("Coin change", () => {
         { coins: [2], amount: 3, output: -1 },
         { coins: [1], amount: 0, output: 0 },
         // Curveball
-        // { coins: [186, 419, 83, 408], amount: 6249, output: 20 },
+        { coins: [186, 419, 83, 408], amount: 6249, output: 20 },
       ].forEach(({ coins, amount, output }) => {
         it(`should take the ${coins} expecting a value amount of ${amount} and produce ${output}`, () => {
           const actual = coinChange(coins, amount);
