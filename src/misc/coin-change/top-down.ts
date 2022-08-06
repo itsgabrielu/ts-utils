@@ -49,9 +49,7 @@ const getMinCoinSelectionLength = (
     // ...handle the next coin choice
     // See README.md
     // console.log(
-    //   `# > Amount (${amount}) - Coin Value (${coinValue}): ${
-    //     amount - coinValue
-    //   }`,
+    //   `Amount (${amount}) - Coin Value (${coinValue}): ${amount - coinValue}`,
     // );
     // It will handle the left most choice (smallest amount)
     currentMinCoinSelectionLength = getMinCoinSelectionLength(
@@ -62,9 +60,7 @@ const getMinCoinSelectionLength = (
     if (currentMinCoinSelectionLength !== -1) {
       const nextMinCoinSelectionLength = currentMinCoinSelectionLength + 1;
       // console.log(
-      //   `# > For the amount of ${
-      //     amount - coinValue
-      //   }, min number of coins so far: ${minCoinSelectionLength} vs min number of coins: ${nextMinCoinSelectionLength}`,
+      //   `# > For the amount of ${amount}, min number of coins so far: ${minCoinSelectionLength} vs min number of coins: ${nextMinCoinSelectionLength}`,
       // );
       minCoinSelectionLength = Number.isNaN(minCoinSelectionLength)
         ? nextMinCoinSelectionLength
