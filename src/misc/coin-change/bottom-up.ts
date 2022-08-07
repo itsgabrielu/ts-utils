@@ -28,7 +28,7 @@ const bottomUp = (
 
   Object.keys(minCoinSelectionLengths).forEach((_, subamount) => {
     sortedCoins.forEach((coin) => {
-      const previousMinCoinSelectionLength = minCoinSelectionLengths[subamount];
+      const existingMinLength = minCoinSelectionLengths[subamount];
       const nextSubamount = subamount - coin;
       // If the next subamount negative integer, it means that that is the end of the coin
       // selection. We can just skip and go to the next coin
@@ -38,12 +38,10 @@ const bottomUp = (
         const nextMinCoinSelectionLength =
           minCoinSelectionLengths[nextSubamount] + 1;
         if (
-          // If coin can deduct subamount...
-          coin <= subamount &&
-          // ...and if either no previous min coin selection length...
-          (Number.isNaN(previousMinCoinSelectionLength) ||
-            // ... or if a smaller min coin selection length is detected...
-            nextMinCoinSelectionLength < previousMinCoinSelectionLength)
+          // If either no previous min coin selection length...
+          Number.isNaN(existingMinLength) ||
+          // ... or if a smaller min coin selection length is detected...
+          nextMinCoinSelectionLength < existingMinLength
         ) {
           // ...then save the smaller min coin selection length under the subamount
           minCoinSelectionLengths[subamount] = nextMinCoinSelectionLength;

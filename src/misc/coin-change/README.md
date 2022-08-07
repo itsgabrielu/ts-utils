@@ -127,50 +127,52 @@ However, with a space complexity of `O((coins.length * amount) * coins.length)`,
 
 # Bottom up method
 
-We create a table where coin denomination represent each row, amount represent each column and each cell represents the **number of possible coin selections** given the coin denomination and amount, where by going cells from
-left to right and top to bottom. For every cell in a column, calculate the minimum coin selection length for the amount with the possible coins in the current row and above rows. Every subsequent row will consider a new possible coin choice
-factored into the minimum coin selection length. Only when all the minimum coin selection lengths for all possible coins have been calculated, then we move to the next column and start again, this time with the next amount.
+We create a table where for each row, each coin denomination is subtracted with all possible subamounts including the main amount in an
+sorted by subamount in an ascending order, then coin denomination in a descending order. We only handle the next subamounts that are positive integers or zero. All minimum amounts are
+stored in `Record<Amount, CoinSelectionLength> dp`.
 
 For the test case `{ coins: [1, 2, 5], amount: 11, output: 3 }`:
 
-| Subamount | Coin | Next Subamount (Subamount - Coin) | Action   | Existing Min Length for Next Subamount | Min Length for Next Subamount to consider | Action                          |
-| --------- | ---- | --------------------------------- | -------- | -------------------------------------- | ----------------------------------------- | ------------------------------- |
-| 0         | 5    | -5                                | Skip     | -                                      | -                                         | -                               |
-| 0         | 2    | -2                                | Skip     | -                                      | -                                         | -                               |
-| 0         | 1    | -1                                | Skip     | -                                      | -                                         | -                               |
-| 1         | 5    | -4                                | Skip     | -                                      | -                                         | -                               |
-| 1         | 2    | -1                                | Skip     | -                                      | -                                         | -                               |
-| 1         | 1    | 0                                 | Continue | Initial value                          | 1                                         | Replace with smaller min length |
-| 2         | 5    | -3                                | Skip     | -                                      | -                                         | -                               |
-| 2         | 2    | 0                                 | Continue | Initial value                          | 1                                         | Replace with smaller min length |
-| 2         | 1    | 1                                 | Continue | 1                                      | 2                                         | Keep                            |
-| 3         | 5    | -2                                | Skip     | -                                      | -                                         | -                               |
-| 3         | 2    | 1                                 | Continue | Initial value                          | 2                                         | Replace with smaller min length |
-| 3         | 1    | 2                                 | Continue | 2                                      | 2                                         | Keep                            |
-| 4         | 5    | -1                                | Skip     | -                                      | -                                         | -                               |
-| 4         | 2    | 2                                 | Continue | Initial value                          | 2                                         | Replace with smaller min length |
-| 4         | 1    | 3                                 | Continue | 2                                      | 3                                         | Keep                            |
-| 5         | 5    | 0                                 | Continue | Initial value                          | 1                                         | Replace with smaller min length |
-| 5         | 2    | 3                                 | Continue | 1                                      | 3                                         | Keep                            |
-| 5         | 1    | 4                                 | Continue | 1                                      | 3                                         | Keep                            |
-| 6         | 5    | 1                                 | Continue | Initial value                          | 2                                         | Replace with smaller min length |
-| 6         | 2    | 4                                 | Continue | 2                                      | 3                                         | Keep                            |
-| 6         | 1    | 5                                 | Continue | 2                                      | 2                                         | Keep                            |
-| 7         | 5    | 2                                 | Continue | Initial value                          | 2                                         | Replace with smaller min length |
-| 7         | 2    | 5                                 | Continue | 2                                      | 2                                         | Keep                            |
-| 7         | 1    | 6                                 | Continue | 2                                      | 3                                         | Keep                            |
-| 8         | 5    | 3                                 | Continue | Initial value                          | 3                                         | Replace with smaller min length |
-| 8         | 2    | 6                                 | Continue | 3                                      | 3                                         | Keep                            |
-| 8         | 1    | 7                                 | Continue | 3                                      | 3                                         | Keep                            |
-| 9         | 5    | 4                                 | Continue | Initial value                          | 3                                         | Replace with smaller min length |
-| 9         | 2    | 7                                 | Continue | 3                                      | 3                                         | Keep                            |
-| 9         | 1    | 8                                 | Continue | 3                                      | 4                                         | Keep                            |
-| 10        | 5    | 5                                 | Continue | Initial value                          | 2                                         | Replace with smaller min length |
-| 10        | 2    | 8                                 | Continue | 2                                      | 4                                         | Keep                            |
-| 10        | 1    | 9                                 | Continue | 2                                      | 4                                         | Keep                            |
-| 11        | 5    | 6                                 | Continue | Initial value                          | 3                                         | Replace with smaller min length |
-| 11        | 2    | 9                                 | Continue | 3                                      | 4                                         | Keep                            |
-| 11        | 1    | 10                                | Continue | 3                                      | **3**                                     | Keep                            |
+| Subamount | Coin | Next Subamount (Subamount - Coin) | Action   | Existing Min Length for Next Subamount | Min Length for Next Subamount to consider | Action                        |
+| --------- | ---- | --------------------------------- | -------- | -------------------------------------- | ----------------------------------------- | ----------------------------- |
+| 0         | 5    | -5                                | Skip     | -                                      | -                                         | -                             |
+| 0         | 2    | -2                                | Skip     | -                                      | -                                         | -                             |
+| 0         | 1    | -1                                | Skip     | -                                      | -                                         | -                             |
+| 1         | 5    | -4                                | Skip     | -                                      | -                                         | -                             |
+| 1         | 2    | -1                                | Skip     | -                                      | -                                         | -                             |
+| 1         | 1    | 0                                 | Continue | Initial value                          | 1                                         | dp[1] := ~~Initial value~~ 1  |
+| 2         | 5    | -3                                | Skip     | -                                      | -                                         | -                             |
+| 2         | 2    | 0                                 | Continue | Initial value                          | 1                                         | dp[2] := ~~Initial value~~ 1  |
+| 2         | 1    | 1                                 | Continue | 1                                      | 2                                         | Keep                          |
+| 3         | 5    | -2                                | Skip     | -                                      | -                                         | -                             |
+| 3         | 2    | 1                                 | Continue | Initial value                          | 2                                         | dp[3] := ~~Initial value~~ 2  |
+| 3         | 1    | 2                                 | Continue | 2                                      | 2                                         | Keep                          |
+| 4         | 5    | -1                                | Skip     | -                                      | -                                         | -                             |
+| 4         | 2    | 2                                 | Continue | Initial value                          | 2                                         | dp[4] := ~~Initial value~~ 2  |
+| 4         | 1    | 3                                 | Continue | 2                                      | 3                                         | Keep                          |
+| 5         | 5    | 0                                 | Continue | Initial value                          | 1                                         | dp[5] := ~~Initial value~~ 1  |
+| 5         | 2    | 3                                 | Continue | 1                                      | 3                                         | Keep                          |
+| 5         | 1    | 4                                 | Continue | 1                                      | 3                                         | Keep                          |
+| 6         | 5    | 1                                 | Continue | Initial value                          | 2                                         | dp[6] := ~~Initial value~~ 2  |
+| 6         | 2    | 4                                 | Continue | 2                                      | 3                                         | Keep                          |
+| 6         | 1    | 5                                 | Continue | 2                                      | 2                                         | Keep                          |
+| 7         | 5    | 2                                 | Continue | Initial value                          | 2                                         | dp[7] := ~~Initial value~~ 2  |
+| 7         | 2    | 5                                 | Continue | 2                                      | 2                                         | Keep                          |
+| 7         | 1    | 6                                 | Continue | 2                                      | 3                                         | Keep                          |
+| 8         | 5    | 3                                 | Continue | Initial value                          | 3                                         | dp[8] := ~~Initial value~~ 3  |
+| 8         | 2    | 6                                 | Continue | 3                                      | 3                                         | Keep                          |
+| 8         | 1    | 7                                 | Continue | 3                                      | 3                                         | Keep                          |
+| 9         | 5    | 4                                 | Continue | Initial value                          | 3                                         | dp[9] := ~~Initial value~~ 3  |
+| 9         | 2    | 7                                 | Continue | 3                                      | 3                                         | Keep                          |
+| 9         | 1    | 8                                 | Continue | 3                                      | 4                                         | Keep                          |
+| 10        | 5    | 5                                 | Continue | Initial value                          | 2                                         | dp[10] := ~~Initial value~~ 2 |
+| 10        | 2    | 8                                 | Continue | 2                                      | 4                                         | Keep                          |
+| 10        | 1    | 9                                 | Continue | 2                                      | 4                                         | Keep                          |
+| 11        | 5    | 6                                 | Continue | Initial value                          | 3                                         | dp[11] := ~~Initial value~~ 3 |
+| 11        | 2    | 9                                 | Continue | 3                                      | 4                                         | Keep                          |
+| 11        | 1    | 10                                | Continue | 3                                      | 3                                         | Keep                          |
+
+We can then get the minimum number of coins of 3
 
 # References
 
