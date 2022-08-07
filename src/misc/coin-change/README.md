@@ -127,11 +127,10 @@ However, with a space complexity of `O((coins.length * amount) * coins.length)`,
 
 # Bottom up method
 
-We create a table where for each row, each coin denomination is subtracted with all possible subamounts including the main amount in an
-sorted by subamount in an ascending order, then coin denomination in a descending order. We only handle the next subamounts that are positive integers or zero. All minimum amounts are
-stored in `Record<Amount, CoinSelectionLength> dp`.
+We create a table where for each row, each coin denomination is subtracted with all possible subamounts inclusive of the amount. The subamounts are sorted in an ascending order, then coin denomination in a descending order. We then handle the next subamounts that are positive integers or zero. All minimum coin selection lengths are
+stored in a hashmap like data structure (in this case, JavaScript object `Record<Amount, CoinSelectionLength>` named `dp` as used below) as it calculates every subamount towards the final amount.
 
-For the test case `{ coins: [1, 2, 5], amount: 11, output: 3 }`:
+Illustrating the test case `{ coins: [1, 2, 5], amount: 11, output: 3 }`, we can then slowly work out the minimum length once `subamount === amount`.
 
 | Subamount | Coin | Next Subamount (Subamount - Coin) | Action   | Existing Min Length for Next Subamount | Min Length for Next Subamount to consider | Action                        |
 | --------- | ---- | --------------------------------- | -------- | -------------------------------------- | ----------------------------------------- | ----------------------------- |
@@ -172,7 +171,7 @@ For the test case `{ coins: [1, 2, 5], amount: 11, output: 3 }`:
 | 11        | 2    | 9                                 | Continue | 3                                      | 4                                         | Keep                          |
 | 11        | 1    | 10                                | Continue | 3                                      | 3                                         | Keep                          |
 
-We can then get the minimum number of coins of 3
+After reaching all possible coin choices and the final amount, we can then get the minimum number of coins as `dp[11] = 3`.
 
 # References
 
