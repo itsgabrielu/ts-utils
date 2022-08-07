@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import bottomUp from "../../src/misc/coin-change/bottom-up";
 import topDown from "../../src/misc/coin-change/top-down";
 
 describe("Coin change", () => {
@@ -19,6 +20,12 @@ describe("Coin change", () => {
         describe("Using the top-down method - topDown", () => {
           it(`should take the ${coins} expecting a value amount of ${amount} and produce ${output}`, () => {
             const actual = topDown(coins, amount);
+            expect(actual).to.equal(output);
+          });
+        });
+        describe("Using the bottom-up method - bottomUp", () => {
+          it(`should take the ${coins} expecting a value amount of ${amount} and produce ${output}`, () => {
+            const actual = bottomUp(coins, amount);
             expect(actual).to.equal(output);
           });
         });

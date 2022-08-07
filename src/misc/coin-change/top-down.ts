@@ -1,21 +1,4 @@
-/**
- * Value of a coin option
- *
- * Assuming coin values are positive integers
- */
-type CoinDenomination = number;
-/**
- * Any positive integer less than or equal to the amount
- * or a positive integer that can obtained from subtracting
- * any CoinDenomination from the amount
- */
-type Amount = number;
-/**
- * Number of coins in a selection
- *
- * `-1` -> Invalid selection
- */
-type CoinSelectionLength = number;
+import { CoinDenomination, Amount, CoinSelectionLength } from "./types";
 
 const getMinCoinSelectionLength = (
   coins: CoinDenomination[],
@@ -85,12 +68,13 @@ const getMinCoinSelectionLength = (
  * Solution to the "Coin Change" problem using top down dynamic programming
  *
  * Best/Worst time complexity: `O(coins.length x amount)`
+ * Space complexity: `O((coins.length x amount) x amount)`
  *
  * @param coins All possible coin types
  * @param amount Sum of any considered coin selections
  * @returns Minimum length of coin selections that makes the amount
  */
-const topDownSmallBig = (
+const topDown = (
   coins: CoinDenomination[],
   amount: Amount,
 ): CoinSelectionLength => {
@@ -110,4 +94,4 @@ const topDownSmallBig = (
   return minCoinSelectionLength;
 };
 
-export default topDownSmallBig;
+export default topDown;
